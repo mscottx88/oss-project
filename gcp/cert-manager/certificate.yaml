@@ -1,0 +1,19 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: oss-dev
+  namespace: default
+spec:
+  secretName: oss-dev-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: platform.oss-dev.net
+  dnsNames:
+  - platform.oss-dev.net
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - platform.oss-dev.net
