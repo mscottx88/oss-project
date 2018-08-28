@@ -1,0 +1,21 @@
+{
+  "all": true,
+  "branches": 100,
+  "check-coverage": true,
+  "extension": [".ts"],
+  "exclude": ["src/**/*.d.ts"],
+  "functions": 100,
+  "include": ["src/**/*.ts"],
+  "lines": 100,
+  "per-file": false,
+  "reporter": [
+    "html",
+    "text",
+    "text-summary"
+  ],
+  "require": [
+    "ts-node/register",
+    "source-map-support/register"
+  ],
+  "statements": 100
+}
