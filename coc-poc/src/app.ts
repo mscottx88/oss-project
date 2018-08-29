@@ -7,6 +7,8 @@ import * as yaml from 'yamljs';
 
 import players from './routers/players';
 
+import * as cocAuth from './providers/coc-auth';
+
 interface SwaggerUiInterface {
   serve: RequestHandler;
   setup: (spec: SwaggerSpec) => RequestHandler;
@@ -33,6 +35,8 @@ export interface IValidation {
 }
 
 export default async function get(config: IConfig): Promise<Application> {
+  await Promise.all([cocAuth.setConfig(config)]);
+
   const app: Application = express();
 
   // health check for kubernetes
@@ -42,17 +46,10 @@ export default async function get(config: IConfig): Promise<Application> {
 
   // hosted Swagger UI
   const swaggerSpec: SwaggerSpec = yaml.load(`${__dirname}/../swagger.yaml`);
-  app.use(
-    '/api/v1/coc-poc/api-docs.json',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec),
-  );
+  app.use('/api/v1/coc-poc/api-docs.json', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // endpoints
-  app.use('/', [
-    bodyParser.json(),
-    players,
-  ]);
+  app.use('/', [bodyParser.json(), players]);
 
   return app;
 }

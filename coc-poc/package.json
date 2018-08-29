@@ -34,6 +34,8 @@
     "@types/joi": "^13.4.4",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.7.1",
+    "@types/request": "^2.47.1",
+    "@types/request-promise": "^4.1.42",
     "@types/yamljs": "^0.2.30",
     "source-map-support": "^0.5.9",
     "ts-node": "^6.1.1",
