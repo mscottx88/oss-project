@@ -6,29 +6,25 @@ import { CocApiToken, default as getBearerToken } from '../providers/coc-auth';
 
 import { COC_HOSTNAME } from '../consts';
 
-export const API_PATH: string = 'v1/players';
+export const API_PATH: string = 'v1/clans';
 
-export type PlayerTag = string;
-export type PlayerName = string;
+export type ClanTag = string;
+export type ClanName = string;
 export type EntityLevel = number;
 export type TrophyCount = number;
 
-export interface IPlayerInfo {
-  tag: PlayerTag;
-  name: PlayerName;
-  townHallLevel: EntityLevel;
-  townHallWeaponLevel: EntityLevel;
-  expLevel: EntityLevel;
-  trophies: TrophyCount;
+export interface IClanInfo {
+  tag: ClanTag;
+  name: ClanName;
 }
 
-export async function getPlayerInfo({ playerTag }: { playerTag: PlayerTag }): Promise<IPlayerInfo> {
+export async function getClanInfo({ clanTag }: { clanTag: ClanTag }): Promise<IClanInfo> {
   const options: OptionsWithUri = {
     headers: {
       Authorization: await getBearerToken(),
     },
     json: true,
-    uri: `${COC_HOSTNAME}/${API_PATH}/${encodeURIComponent(playerTag)}`,
+    uri: `${COC_HOSTNAME}/${API_PATH}/${encodeURIComponent(clanTag)}`,
   };
   return request.get(options);
 }

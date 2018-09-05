@@ -92,6 +92,14 @@ spec:
         backend:
           serviceName: coc-poc
           servicePort: 80
+      - path: /(api/v\\d+/coc-poc/clans)
+        backend:
+          serviceName: coc-poc
+          servicePort: 80
+      - path: /(api/v\\d+/coc-poc/clans/.*)
+        backend:
+          serviceName: coc-poc
+          servicePort: 80
       - path: /(api/v\\d+/coc-poc/players)
         backend:
           serviceName: coc-poc

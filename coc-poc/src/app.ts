@@ -5,6 +5,7 @@ import * as HttpStatus from 'http-status-codes';
 import { Schema } from 'joi';
 import * as yaml from 'yamljs';
 
+import clans from './routers/clans';
 import players from './routers/players';
 
 import * as cocAuth from './providers/coc-auth';
@@ -49,7 +50,7 @@ export default async function get(config: IConfig): Promise<Application> {
   app.use('/api/v1/coc-poc/api-docs.json', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // endpoints
-  app.use('/', [bodyParser.json(), players]);
+  app.use('/', [bodyParser.json(), clans, players]);
 
   return app;
 }
