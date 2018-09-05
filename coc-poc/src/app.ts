@@ -29,6 +29,10 @@ export interface IController {
   validation: IValidation;
 }
 
+export interface IControllers {
+  [key: string]: IController;
+}
+
 export interface IValidation {
   body?: Schema;
   params?: Schema;

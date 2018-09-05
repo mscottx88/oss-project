@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as _ from 'lodash';
-import { IController } from '../app';
+import { IController, IControllers } from '../app';
 
 /**
  * Take a controller and asyncify the handlers.
@@ -11,7 +11,7 @@ import { IController } from '../app';
  * @returns {Object}
  * The controller's handler methods are asyncified.
  */
-export default function asyncifyController(controller: object): object {
+export default function asyncifyController(controller: object): IControllers {
   return _.mapValues(
     controller,
     (value: IController): IController => {
@@ -36,5 +36,5 @@ export default function asyncifyController(controller: object): object {
       /* istanbul ignore next */
       return value;
     },
-  );
+  ) as IControllers;
 }

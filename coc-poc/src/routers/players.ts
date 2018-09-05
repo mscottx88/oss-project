@@ -1,13 +1,10 @@
 import { RequestHandler, Router } from 'express';
-import { IValidation } from '../app';
+import { IControllers, IValidation } from '../app';
 import asyncifyController from '../controllers/helpers';
-import { ControllersInterface } from '../controllers/players';
 
 const validate: (validation: IValidation) => RequestHandler = require('express-validation');
 
-const { get }: ControllersInterface = asyncifyController(
-  require('../controllers/players'),
-) as ControllersInterface;
+const { get }: IControllers = asyncifyController(require('../controllers/players'));
 
 const router: Router = Router();
 

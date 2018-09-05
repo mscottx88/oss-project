@@ -6,6 +6,8 @@ import { CocApiToken, default as getBearerToken } from '../providers/coc-auth';
 
 import { COC_HOSTNAME } from '../consts';
 
+import { PlayerName, PlayerTag } from './players';
+
 export const API_PATH: string = 'v1/clans';
 
 export type ClanTag = string;
@@ -18,6 +20,11 @@ export interface IClanInfo {
   name: ClanName;
 }
 
+export interface IClanMember {
+  tag: PlayerTag;
+  name: PlayerName;
+}
+
 export async function getClanInfo({ clanTag }: { clanTag: ClanTag }): Promise<IClanInfo> {
   const options: OptionsWithUri = {
     headers: {
@@ -27,4 +34,16 @@ export async function getClanInfo({ clanTag }: { clanTag: ClanTag }): Promise<IC
     uri: `${COC_HOSTNAME}/${API_PATH}/${encodeURIComponent(clanTag)}`,
   };
   return request.get(options);
+}
+
+export async function getClanMembers({ clanTag }: { clanTag: ClanTag }): Promise<IClanMember[]> {
+  const options: OptionsWithUri = {
+    headers: {
+      Authorization: await getBearerToken(),
+    },
+    json: true,
+    uri: `${COC_HOSTNAME}/${API_PATH}/${encodeURIComponent(clanTag)}/members`,
+  };
+  const { items }: { items: IClanMember[] } = await request.get(options);
+  return items;
 }
