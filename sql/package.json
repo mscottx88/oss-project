@@ -1,0 +1,32 @@
+{
+  "name": "sql",
+  "version": "1.0.0",
+  "description": "Utilities for SQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael P. Scott",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.7.2",
+    "eslint-config-formidable": "^3.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-filenames": "^1.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "fs-extra": "^4.0.2",
+    "mocha": "^3.5.3",
+    "mock-require": "^2.0.2",
+    "nyc": "^11.2.1",
+    "pg": "^7.4.0",
+    "prettier": "^1.13.7",
+    "sinon": "^3.3.0",
+    "sinon-chai": "^2.13.0"
+  }
+}

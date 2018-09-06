@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "formidable/configurations/es6-node",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "semi": [2, "always"],
+    "quotes": [2, "single"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  }
+}
