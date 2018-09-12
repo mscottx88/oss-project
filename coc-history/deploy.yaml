@@ -1,0 +1,129 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: coc-history
+spec:
+  revisionHistoryLimit: 2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: coc-history
+    spec:
+      containers:
+        - image: gcr.io/oss-dev-213920/coc-history:1.0.0
+          imagePullPolicy: Always
+          name: coc-history
+          ports:
+          - containerPort: 8080
+          env:
+          - name: DEFAULT_PORT
+            value: "8080"
+          - name: LOG_LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: LOG_LEVEL
+          - name: NODE_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: NODE_ENV
+          - name: PGDATABASE
+            value: coc
+          - name: PGHOST
+            value: "127.0.0.1"
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-basic-auth
+                key: PGPASSWORD
+          - name: PGPORT
+            value: "4400"
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-basic-auth
+                key: PGUSER
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: "0"
+        - image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          name: cloudsql-proxy
+          command: ["/cloud_sql_proxy",
+                    "--dir=/cloudsql",
+                    "-verbose=false",
+                    "-instances=oss-dev-213920:us-central1:oss-dev=tcp:4400",
+                    "-credential_file=/secrets/cloudsql/postgres.json"]
+          volumeMounts:
+            - name: postgres-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs
+            - name: cloudsql
+              mountPath: /cloudsql
+      volumes:
+        - name: postgres-credentials
+          secret:
+            secretName: postgres
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql
+          emptyDir:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coc-history
+spec:
+  selector:
+    app: coc-history
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: http
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: coc-history
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: $1
+    certmanager.k8s.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - platform.oss-dev.net
+    secretName: oss-dev-tls
+  rules:
+  - host: platform.oss-dev.net
+    http:
+      paths:
+      - path: /(api/v\\d+/coc-history/api-docs.json)
+        backend:
+          serviceName: coc-history
+          servicePort: 80
+      - path: /(api/v\\d+/coc-history/api-docs.json/.*)
+        backend:
+          serviceName: coc-history
+          servicePort: 80

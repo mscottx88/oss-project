@@ -1,0 +1,45 @@
+{
+  "name": "coc-history",
+  "version": "1.0.0",
+  "description": "An application that serves and records players' history in COC.",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "coverage": "nyc -- mocha \"test/spec/**/*.spec.ts\"",
+    "start": "node dist/index.js",
+    "lint": "tslint \"src/**/*.ts\"",
+    "prettier": "cat .gitignore .prettierignore > .gitprettierignore && prettier --write --config .prettierrc \"**/*.{ts,scss,json}\" --ignore-path .gitprettierignore",
+    "test": "npm run lint && npm run coverage",
+    "unit": "mocha \"test/spec/**/*.spec.ts\""
+  },
+  "author": "Michael P. Scott",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-validation": "^1.0.2",
+    "http-errors": "^1.7.0",
+    "http-status-codes": "^1.3.0",
+    "joi": "^13.6.0",
+    "lodash": "^4.17.10",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "swagger-ui-express": "^3.0.10",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/http-errors": "^1.6.1",
+    "@types/http-status-codes": "^1.2.0",
+    "@types/joi": "^13.4.4",
+    "@types/lodash": "^4.14.116",
+    "@types/node": "^10.7.1",
+    "@types/request": "^2.47.1",
+    "@types/request-promise": "^4.1.42",
+    "@types/yamljs": "^0.2.30",
+    "source-map-support": "^0.5.9",
+    "ts-node": "^6.1.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  }
+}

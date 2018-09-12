@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "lib": ["dom", "es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "outDir": "./dist",
+    "pretty": true,
+    "paths": {
+      "*": ["src/@types/*"]
+    },
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2018"
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*"]
+}
