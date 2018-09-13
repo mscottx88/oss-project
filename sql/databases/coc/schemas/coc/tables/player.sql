@@ -1,6 +1,12 @@
-DROP TABLE IF EXISTS coc.player;
+DROP TABLE IF EXISTS coc.player CASCADE;
 
 CREATE TABLE coc.player (
   player_id BIGINT NOT NULL PRIMARY KEY DEFAULT NEXTVAL('coc.player_id_seq'),
-  player_tag TEXT NOT NULL UNIQUE
+  player_tag TEXT NOT NULL UNIQUE,
+  clan_id BIGINT
+    REFERENCES coc.clan
+    ON DELETE SET NULL
+    ON UPDATE RESTRICT,
+  registration_type TEXT,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS coc.clan CASCADE;
+
+CREATE TABLE coc.clan (
+  clan_id BIGINT NOT NULL PRIMARY KEY DEFAULT NEXTVAL('coc.clan_id_seq'),
+  clan_tag TEXT NOT NULL UNIQUE,
+  registration_type TEXT,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

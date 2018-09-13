@@ -27,13 +27,13 @@ const createSchema = async () => {
     // create schema
     fs.readFile(`${path}/coc.sql`, 'utf8'),
     // create sequences
-    fs.readFile(`${path}/sequences/history_metric_id_seq.sql`, 'utf8'),
-    fs.readFile(`${path}/sequences/player_history_id_seq.sql`, 'utf8'),
+    fs.readFile(`${path}/sequences/clan_id_seq.sql`, 'utf8'),
     fs.readFile(`${path}/sequences/player_id_seq.sql`, 'utf8'),
+    fs.readFile(`${path}/sequences/daily_info_snapshot_id_seq.sql`, 'utf8'),
     // create tables
-    fs.readFile(`${path}/tables/history_metric.sql`, 'utf8'),
-    fs.readFile(`${path}/tables/player_history.sql`, 'utf8'),
+    fs.readFile(`${path}/tables/clan.sql`, 'utf8'),
     fs.readFile(`${path}/tables/player.sql`, 'utf8')
+    fs.readFile(`${path}/tables/daily_info_snapshot.sql`, 'utf8'),
     // create indexes
     // create functions
   ]);
