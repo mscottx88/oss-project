@@ -1,5 +1,7 @@
 import { Pool, PoolClient, QueryResult } from 'pg';
 
+export { QueryResult } from 'pg';
+
 export interface IStatement {
   parameters: any[]; // tslint:disable-line:no-any
   statement: string;
