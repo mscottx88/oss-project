@@ -5,8 +5,8 @@ import * as joi from 'joi';
 import { IController, IValidation } from '../app';
 import * as helpers from './helpers';
 
-import { IPlayer, PlayerTag } from '../services/player';
-import * as playerServices from '../services/player';
+import { IPlayer, PlayerTag } from '../services/players';
+import * as playerServices from '../services/players';
 
 export const create: IController = {
   handler: async (request: Request, response: Response): Promise<void> => {

@@ -1,15 +1,5 @@
 import { Pool, PoolClient, QueryResult } from 'pg';
-
 export { QueryResult } from 'pg';
-
-export interface IStatement {
-  parameters: any[]; // tslint:disable-line:no-any
-  statement: string;
-}
-
-export interface IRunTransaction {
-  statements: IStatement[];
-}
 
 const pool: Pool = new Pool();
 
@@ -17,20 +7,29 @@ pool.on('error', (error: Error) => {
   console.error(`An unexpected error occurred in the pg-pool: '${error}'`);
 });
 
+export interface IRunQuery {
+  parameters: any[]; // tslint:disable-line:no-any
+  statement: string;
+}
+
 /**
  * This convenience method runs a single query.
  *
- * @param {IStatement} options
+ * @param {IRunQuery} options
  * * parameters - Any parameters to be injected into the statement.
  * * statement - The SQL statement to run.
  *
  * @returns {Promise<QueryResult>}
  * A Promise resolving to the results of the query.
  */
-export async function runQuery({ parameters, statement }: IStatement): Promise<QueryResult> {
-  const statements: IStatement[] = [{ parameters, statement }];
+export async function runQuery({ parameters, statement }: IRunQuery): Promise<QueryResult> {
+  const statements: IRunQuery[] = [{ parameters, statement }];
   const [result]: [QueryResult] = await module.exports.runTransaction({ statements });
   return result;
+}
+
+export interface IRunTransaction {
+  statements: IRunQuery[];
 }
 
 /**
