@@ -67,6 +67,9 @@ spec:
                     "-verbose=false",
                     "-instances=oss-dev-213920:us-central1:oss-dev=tcp:4400",
                     "-credential_file=/secrets/cloudsql/postgres.json"]
+          resources:
+            requests:
+              cpu: "0"
           volumeMounts:
             - name: postgres-credentials
               mountPath: /secrets/cloudsql
@@ -124,6 +127,14 @@ spec:
           serviceName: coc-history
           servicePort: 80
       - path: /(api/v\\d+/coc-history/api-docs.json/.*)
+        backend:
+          serviceName: coc-history
+          servicePort: 80
+      - path: /(api/v\\d+/coc-history/players)
+        backend:
+          serviceName: coc-history
+          servicePort: 80
+      - path: /(api/v\\d+/coc-history/players/.*)
         backend:
           serviceName: coc-history
           servicePort: 80
