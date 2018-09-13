@@ -5,6 +5,7 @@ import * as HttpStatus from 'http-status-codes';
 import { Schema } from 'joi';
 import * as yaml from 'yamljs';
 
+import dailyInfoSnapshots from './routers/daily-info-snapshots';
 import players from './routers/players';
 
 interface SwaggerUiInterface {
@@ -70,7 +71,7 @@ export default async function get(config: IConfig): Promise<Application> {
   app.use('/api/v1/coc-poc/api-docs.json', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // endpoints
-  app.use('/', [bodyParser.json(), players, errorHandler]);
+  app.use('/', [bodyParser.json(), dailyInfoSnapshots, players, errorHandler]);
 
   return app;
 }

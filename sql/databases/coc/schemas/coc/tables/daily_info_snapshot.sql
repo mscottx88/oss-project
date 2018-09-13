@@ -7,7 +7,7 @@ CREATE TABLE coc.daily_info_snapshot (
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   player_id BIGINT
-    REFERENCES coc.clan
+    REFERENCES coc.player
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   snapshot_date DATE NOT NULL,
