@@ -9,7 +9,7 @@ import { create as createPlayer, IPlayer, PlayerTag } from '../services/player';
 
 export const create: IController = {
   handler: async (request: Request, response: Response): Promise<void> => {
-    const { playerTag }: { playerTag: PlayerTag } = request.params;
+    const { playerTag }: { playerTag: PlayerTag } = request.body;
 
     const player: IPlayer = await createPlayer({ playerTag });
 

@@ -1,0 +1,84 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Built Application",
+      "program": "${workspaceRoot}/dist/index.js",
+      "envFile": "${workspaceRoot}/.vscode/.env",
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*",
+        "<node_internals>/**/*"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch w/ ts-node",
+      "protocol": "inspector",
+      "args": ["${workspaceRoot}/src/index.ts"],
+      "cwd": "${workspaceRoot}",
+      "envFile": "${workspaceRoot}/.vscode/.env",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"],
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*",
+        "<node_internals>/**/*"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch File w/ ts-node",
+      "protocol": "inspector",
+      "args": ["${relativeFile}"],
+      "cwd": "${workspaceRoot}",
+      "envFile": "${workspaceRoot}/.vscode/.env",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"],
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*",
+        "<node_internals>/**/*"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Spec File w/ ts-node",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "${relativeFile}",
+        "--no-timeouts"
+      ],
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*",
+        "<node_internals>/**/*"
+      ],
+      "cwd": "${workspaceRoot}",
+      "runtimeArgs": ["--nolazy"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Integration Spec File w/ ts-node",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "args": [
+        "--require",
+        "test/integration/root.spec.ts",
+        "${relativeFile}",
+        "--no-timeouts"
+      ],
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*",
+        "<node_internals>/**/*"
+      ],
+      "cwd": "${workspaceRoot}",
+      "runtimeArgs": ["--nolazy"]
+    }
+  ]
+}

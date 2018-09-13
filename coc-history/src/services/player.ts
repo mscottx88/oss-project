@@ -21,7 +21,9 @@ export async function create({ playerTag }: IPlayer): Promise<IPlayer> {
     ON CONFLICT (
       player_tag
     )
-    DO NOTHING
+    DO UPDATE
+    SET
+      player_tag = EXCLUDED.player_tag
     RETURNING
       player_id AS "playerId",
       player_tag as "playerTag"`;

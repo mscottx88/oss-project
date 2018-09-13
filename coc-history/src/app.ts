@@ -5,6 +5,8 @@ import * as HttpStatus from 'http-status-codes';
 import { Schema } from 'joi';
 import * as yaml from 'yamljs';
 
+import players from './routers/players';
+
 interface SwaggerUiInterface {
   serve: RequestHandler;
   setup: (spec: SwaggerSpec) => RequestHandler;
@@ -49,7 +51,7 @@ export default async function get(config: IConfig): Promise<Application> {
   app.use('/api/v1/coc-poc/api-docs.json', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // endpoints
-  app.use('/', [bodyParser.json()]);
+  app.use('/', [bodyParser.json(), players]);
 
   return app;
 }
