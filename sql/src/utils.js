@@ -32,7 +32,7 @@ const createSchema = async () => {
     fs.readFile(`${path}/sequences/daily_info_snapshot_id_seq.sql`, 'utf8'),
     // create tables
     fs.readFile(`${path}/tables/clan.sql`, 'utf8'),
-    fs.readFile(`${path}/tables/player.sql`, 'utf8')
+    fs.readFile(`${path}/tables/player.sql`, 'utf8'),
     fs.readFile(`${path}/tables/daily_info_snapshot.sql`, 'utf8'),
     // create indexes
     // create functions
