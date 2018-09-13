@@ -74,12 +74,8 @@ const loadEnv = () => {
  * @returns {Promise<void>}
  * A promise resolving upon completion of the transaction.
  */
-const runTransaction = async ({
-  // eslint-disable-line max-statements
-  ignoreErrors,
-  parameters = [],
-  statements
-}) => {
+// eslint-disable-next-line max-statements
+const runTransaction = async ({ ignoreErrors, parameters = [], statements }) => {
   const client = await pool.connect();
 
   const results = [];
