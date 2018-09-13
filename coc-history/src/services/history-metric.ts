@@ -21,7 +21,9 @@ export async function create({ metricName }: IHistoryMetric): Promise<IHistoryMe
     ON CONFLICT (
       metric_name
     )
-    DO NOTHING
+    DO UPDATE
+    SET
+      metric_name = EXCLUDED.metric_name
     RETURNING
       history_metric_id AS "historyMetricId",
       metric_name as "metricName"`;

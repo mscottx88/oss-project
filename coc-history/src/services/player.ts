@@ -32,3 +32,20 @@ export async function create({ playerTag }: IPlayer): Promise<IPlayer> {
 
   return result.rows[0] as IPlayer;
 }
+
+export async function getByPlayerTag({ playerTag }: IPlayer): Promise<IPlayer> {
+  const parameters: [PlayerTag] = [playerTag];
+
+  const statement: string = `
+    SELECT
+      player_id AS "playerId",
+      player_tag AS "playerTag"
+    FROM coc.player
+    WHERE (
+      player_tag = $1
+    )`;
+
+  const result: QueryResult = await runQuery({ parameters, statement });
+
+  return result.rows[0] as IPlayer;
+}

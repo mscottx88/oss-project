@@ -5,18 +5,38 @@ import * as joi from 'joi';
 import { IController, IValidation } from '../app';
 import * as helpers from './helpers';
 
-import { create as createPlayer, IPlayer, PlayerTag } from '../services/player';
+import { IPlayer, PlayerTag } from '../services/player';
+import * as playerServices from '../services/player';
 
 export const create: IController = {
   handler: async (request: Request, response: Response): Promise<void> => {
     const { playerTag }: { playerTag: PlayerTag } = request.body;
 
-    const player: IPlayer = await createPlayer({ playerTag });
+    const player: IPlayer = await playerServices.create({ playerTag });
 
     response.send({ data: player });
   },
   validation: {
     body: joi.object().keys({
+      playerTag: joi.string().required(),
+    }),
+  },
+};
+
+export const getByPlayerTag: IController = {
+  handler: async (request: Request, response: Response): Promise<void> => {
+    const { playerTag }: { playerTag: PlayerTag } = request.params;
+
+    const player: IPlayer = await playerServices.getByPlayerTag({ playerTag });
+
+    if (!player) {
+      throw new createError.NotFound(`Player with tag '${playerTag}' not found.`);
+    }
+
+    response.send({ data: player });
+  },
+  validation: {
+    params: joi.object().keys({
       playerTag: joi.string().required(),
     }),
   },

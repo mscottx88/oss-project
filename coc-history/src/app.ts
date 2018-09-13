@@ -36,6 +36,25 @@ export interface IValidation {
   query?: Schema;
 }
 
+export function errorHandler(
+  error: any, // tslint:disable-line:no-any
+  request: Request,
+  response: Response,
+  next: NextFunction,
+): void {
+  if (error.message === 'validation error') {
+    response.status(HttpStatus.BAD_REQUEST).json({
+      errors: error.errors || [],
+      message: error.message,
+    });
+  } else {
+    response.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).json({
+      code: error.code || error.name,
+      message: error.message,
+    });
+  }
+}
+
 export default async function get(config: IConfig): Promise<Application> {
   await Promise.all([]);
 
@@ -51,7 +70,7 @@ export default async function get(config: IConfig): Promise<Application> {
   app.use('/api/v1/coc-poc/api-docs.json', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // endpoints
-  app.use('/', [bodyParser.json(), players]);
+  app.use('/', [bodyParser.json(), players, errorHandler]);
 
   return app;
 }
